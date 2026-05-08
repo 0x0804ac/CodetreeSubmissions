@@ -49,7 +49,7 @@ public class Main {
                 else if(board[i][j] == DOWN) index = 1;
                 else if(board[i][j] == LEFT) index = 2;
                 else if(board[i][j] == RIGHT) index = 3;
-                else continue;
+                else continue; //EMPTY 또는 COLLIDED면 구슬이 없으므로 건너뜀
                 x = i + DX[index];
                 y = j + DY[index];
                 //벽이 아니라면 전진
@@ -66,10 +66,7 @@ public class Main {
         }
         //구슬 이동 결과 저장
         for(i=0; i<len; i++) {
-            for(j=0; j<len; j++) {
-                board[i][j] = temp[i][j];
-                //if(board[i][j] == COLLIDED) board[i][j] = EMPTY;
-            }
+            System.arraycopy(temp[i], 0, board[i], 0, len);
         }
     }
 
