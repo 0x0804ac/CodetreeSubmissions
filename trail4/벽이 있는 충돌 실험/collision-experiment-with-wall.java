@@ -8,6 +8,7 @@ public class Main {
     public static final char LEFT = 'L';
     public static final char RIGHT = 'R';
     public static final char EMPTY = 'E';
+    public static final char COLLIDED = 'C';
 
     //(x, y)가 board 내부에 있는지 검사
     public static boolean isValid(char[][] board, int x, int y) {
@@ -34,11 +35,11 @@ public class Main {
     //board에서 1초 동안 이동 실행
     public static void move(char[][] board) {
         int len = board.length;
-        String[][] temp = new String[len][len];
+        char[][] temp = new char[len][len];
         int i, j, x, y, index;
         //초기화
         for(i=0; i<len; i++) {
-            for(j=0; j<len; j++) temp[i][j] = "";
+            for(j=0; j<len; j++) temp[i][j] = EMPTY;
         }
         //한 칸씩 구슬 이동
         for(i=0; i<len; i++) {
@@ -51,17 +52,23 @@ public class Main {
                 else continue;
                 x = i + DX[index];
                 y = j + DY[index];
-                if(isValid(board, x, y)) temp[x][y] += board[i][j];
-                else temp[i][j] += reverse(board[i][j]); //벽에 부딪히면 방향 전환
+                //벽이 아니라면 전진
+                if(isValid(board, x, y)) {
+                    if(temp[x][y] == EMPTY) temp[x][y] = board[i][j]; //빈 칸이면 그냥 배치
+                    else temp[x][y] = COLLIDED; //구슬이 있다면 충돌
+                }
+                //벽에 부딪히면 방향 전환
+                else {
+                    if(temp[i][j] == EMPTY) temp[i][j] = reverse(board[i][j]); //빈 칸이면 그냥 배치
+                    else temp[i][j] = COLLIDED; //구슬이 있다면 충돌
+                }
             }
         }
-        //한 칸씩 구슬 충돌 확인
+        //구슬 이동 결과 저장
         for(i=0; i<len; i++) {
             for(j=0; j<len; j++) {
-                //구슬이 1개 있는 칸은 구슬 유지
-                if(temp[i][j].length() == 1) board[i][j] = temp[i][j].charAt(0);
-                //구슬이 없거나 2개 이상 있는 칸은 구슬 없는 칸이 됨
-                else board[i][j] = EMPTY;
+                board[i][j] = temp[i][j];
+                //if(board[i][j] == COLLIDED) board[i][j] = EMPTY;
             }
         }
     }
