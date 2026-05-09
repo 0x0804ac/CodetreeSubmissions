@@ -80,12 +80,15 @@ public class Main {
         int i, j, num, dir;
         for(i=0; i<n; i++) {
             for(j=0; j<n; j++) {
-                num = sc.nextInt();
+                num = sc.nextInt(); //칸에 쓰인 값(1 ~ n*n, 중복 없음)
                 board.setTile(i, j, new Tile(num, 1));
             }
         }
         for(i=0; i<n; i++) {
-            for(j=0; j<n; j++) board.getTile(i, j).setDirection(sc.nextInt());
+            for(j=0; j<n; j++) {
+                dir = sc.nextInt(); //칸에 쓰인 방향(1 ~ 8)
+                board.getTile(i, j).setDirection(dir);
+            }
         }
         int r = sc.nextInt(); //시작 행(1 ~ n)
         int c = sc.nextInt(); //시작 열(1 ~ n)
