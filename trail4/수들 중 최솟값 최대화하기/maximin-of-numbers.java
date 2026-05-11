@@ -9,13 +9,14 @@ public class Main {
     //grid[row]에서 한 칸 칠하기, 지금까지의 최솟값: midMin
     public static void func(int row, int midMin) {
         int len = checked.length;
-        //다 칠했으면 합 계산
+        //다 칠했으면 최댓값 갱신
         if(row == len) {
             output = Math.max(output, midMin);
             return;
         }
+        //grid[row]의 모든 칸에 대하여 탐색
         for(int i=0; i<len; i++) {
-            //아직 확인하지 않은 칸만 탐색
+            //색칠되지 않은 열에 대해서만 탐색
             if(!checked[i]) {
                 checked[i] = true;
                 func(row + 1, Math.min(midMin, grid[row][i]));
@@ -26,7 +27,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+        int n = sc.nextInt(); //격자 크기(1 ~ 10)
         grid = new int[n][n];
         checked = new boolean[n];
         for(int i=0; i<n; i++) {
