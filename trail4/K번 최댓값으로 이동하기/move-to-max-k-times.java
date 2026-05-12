@@ -56,9 +56,7 @@ class Board {
     }
 
     public void setTile(int row, int column, int value) {
-        if(isValidIndex(row) && isValidIndex(column) && value > 0) {
-            g[row][column] = new Tile(row, column, value);
-        }
+        if(isValidIndex(row) && isValidIndex(column) && value > 0) g[row][column] = new Tile(row, column, value);
     }
 
     //(row, column)에서 한 번 이동했을 때 도착 지점(이동하지 못할 경우 null)
@@ -80,7 +78,7 @@ class Board {
                 }
             }
         }
-        //다음 BFS를 위해 초기화
+        //다음 BFS를 위해 방문 정보 초기화
         for(Tile[] line : g) {
             for(Tile t : line) {
                 if(t != null) t.setVisited(false);
