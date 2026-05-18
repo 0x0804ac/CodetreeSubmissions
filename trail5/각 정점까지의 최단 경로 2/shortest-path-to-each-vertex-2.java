@@ -47,9 +47,12 @@ public class Main {
                 }
             }
         }
-        //최단 거리 출력
+        //최단 거리(도달 불가능하면 -1) 출력
         for(i=1; i<=n; i++) {
-            for(j=1; j<=n; j++) System.out.print((distance[i][j] == MAX ? -1 : distance[i][j]) + " ");
+            for(j=1; j<=n; j++) {
+                k = (distance[i][j] == MAX) ? -1 : distance[i][j];
+                System.out.print(k + " ");
+            }
             System.out.println();
         }
     }
