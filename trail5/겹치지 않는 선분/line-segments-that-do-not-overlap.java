@@ -1,4 +1,6 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.TreeSet;
 
 class Segment implements Comparable<Segment> {
@@ -34,15 +36,18 @@ class Segment implements Comparable<Segment> {
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static final String SPACE = " ";
+
+    public static void main(String[] args) throws IOException, NumberFormatException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         TreeSet<Segment> set = new TreeSet<>();
         Segment s;
-        int n = sc.nextInt(); //1 ~ 100_000
+        int n = Integer.parseInt(br.readLine()); //1 ~ 100_000
         int i, e;
         //n개의 선분
         for(i=0; i<n; i++) {
-            s = new Segment(sc.nextInt(), sc.nextInt()); //-1_000_000 ~ 1_000_000
+            String[] line = br.readLine().split(SPACE);
+            s = new Segment(Integer.parseInt(line[0]), Integer.parseInt(line[1])); //-1_000_000 ~ 1_000_000
             set.add(s);
         }
         Segment[] arr = new Segment[n];
