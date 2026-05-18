@@ -56,26 +56,30 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt(); //사람 수(1 ~ 100000)
         int g = sc.nextInt(); //그룹 수(2 ~ 250000)
-        LinkedList<Person> queue = new LinkedList<>();
+        LinkedList<Person> queue = new LinkedList<>(); //BFS 큐
         Person[] people = new Person[n + 1];
         Group[] groups = new Group[g];
-        int i, j;
+        int i, j, count, number;
         for(i=1; i<=n; i++) people[i] = new Person(i);
         for(i=0; i<g; i++) {
-            int count = sc.nextInt();
+            count = sc.nextInt(); //그룹 인원
             groups[i] = new Group(count);
             for(j=0; j<count; j++) {
-                int number = sc.nextInt();
+                number = sc.nextInt(); //그룹 멤버 번호
                 groups[i].addMember(people[number]);
                 people[number].addGroup(groups[i]);
             }
         }
-        int output = 1;
+        //1번 사람이 최초로 초대받음
         invite(people[1]);
         queue.add(people[1]);
+        int output = 1; //초대받은 사람 수
+        //BFS 진행
         while(!queue.isEmpty()) {
             Person next = queue.poll();
+            //이 사람이 속한 모든 그룹에 대하여 검사
             for(Group group : next.getGroups()) {
+                //그룹 내에 초대받지 못한 사람이 1명일 경우 그 사람을 초대
                 if(group.getMemberCount() == 1) {
                     for(Person p : group.getMembers()) {
                         invite(p);
