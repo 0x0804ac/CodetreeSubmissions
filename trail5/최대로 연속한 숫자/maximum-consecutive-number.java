@@ -1,4 +1,6 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.TreeSet;
 
 class Range implements Comparable<Range> {
@@ -30,19 +32,23 @@ class Range implements Comparable<Range> {
 }
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt(); //1 ~ 1_000_000_000
-        int m = sc.nextInt(); //제거할 수의 개수(1 ~ min(n-1, 100_000))
+    public static final String SPACE = " ";
+
+    public static void main(String[] args) throws IOException, NumberFormatException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] line = br.readLine().split(SPACE);
+        int n = Integer.parseInt(line[0]); //1 ~ 1_000_000_000
+        int m = Integer.parseInt(line[1]); //제거할 수의 개수(1 ~ min(n-1, 100_000))
         TreeSet<Integer> removed = new TreeSet<Integer>(); //제거된 수 집합
         TreeSet<Range> sequence = new TreeSet<Range>(); //연속된 수 수열 집합
         //양쪽 끝 계산을 위해 추가
         removed.add(-1);
         removed.add(n + 1);
         sequence.add(new Range(0, n)); //최초 상태: 0부터 n까지의 숫자가 하나씩 있음
+        line = br.readLine().split(SPACE);
         int i, l, r, input;
         for(i=0; i<m; i++) {
-            input = sc.nextInt(); //제거할 수(1 ~ n-1, 중복 없음)
+            input = Integer.parseInt(line[i]); //제거할 수(1 ~ n-1, 중복 없음)
             l = removed.floor(input) + 1; //제거할 수가 있는 수열의 왼쪽 끝
             r = removed.ceiling(input) - 1; //제거할 수가 있는 수열의 오른쪽 끝
             removed.add(input);
